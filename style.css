@@ -1,0 +1,60 @@
+:root{
+  --bg:#0f0d12;
+  --panel:#16131c;
+  --ink:#ececf2;
+  --mut:#aab0c0;
+  --brand:#7a0e17;
+  --accent:#55d7ff;
+  --gold:#f8e7d9;
+  --chip:#282234;
+  --btn:#241b2a;
+  --btn2:#1f1824;
+  --line:rgba(255,255,255,.12);
+}
+html,body{margin:0;height:100%;background:radial-gradient(1200px 800px at 70% 10%,#14111b 0%,var(--bg) 60%);color:var(--ink);font-family:system-ui,Segoe UI,Roboto,Arial}
+.topbar{position:fixed;left:0;right:0;top:0;height:48px;display:flex;gap:.45rem;align-items:center;padding:0 .6rem;background:linear-gradient(#171320,#120f18);z-index:20;backdrop-filter:saturate(1.2) blur(4px);border-bottom:1px solid var(--line)}
+.pill{padding:.3rem .6rem;border-radius:999px;background:#1e1930;color:#eae7f5;font-size:.92rem;white-space:nowrap;border:1px solid rgba(255,255,255,.1)}
+.pill.brand{background:#25101a;color:#ffe7e0;border-color:#3a1620}
+.sp{flex:1}
+.btn{padding:.38rem .68rem;border-radius:10px;background:linear-gradient(#221a2a,#1a1422);color:#f3e9dc;font-weight:700;cursor:pointer;user-select:none;border:1px solid rgba(255,255,255,.08)}
+.btn:active{transform:translateY(1px)}
+#wrap{position:fixed;inset:48px 0 0 0;display:grid;place-items:center}
+canvas{touch-action:none;background:#100c14;border-radius:12px;box-shadow:0 12px 50px rgba(0,0,0,.65)}
+#hint{position:fixed;left:0;right:0;bottom:.5rem;text-align:center;font-size:.9rem;opacity:.88;pointer-events:none;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+
+.panel{position:fixed;inset:auto .6rem .6rem .6rem;top:60px;max-width:1000px;margin:0 auto;background:rgba(16,12,22,.98);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 36px rgba(0,0,0,.5);padding:14px;display:none;z-index:30}
+.panel h2{margin:.2rem 0 .6rem 0;font-size:1.05rem}
+.row{display:flex;gap:.6rem;flex-wrap:wrap}
+.card{flex:1 1 280px;background:#171126;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px}
+.card h3{margin:.1rem 0 .4rem 0;font-size:.98rem}
+.kv{display:flex;justify-content:space-between;margin:.18rem 0}
+.kv b{color:#f3e9dc}
+.list{margin:.3rem 0 .4rem 0}
+.list button{display:block;width:100%;margin:.25rem 0;padding:.62rem .6rem;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#25182e;color:#f8e7d9;font-weight:700;cursor:pointer}
+.list button:disabled{opacity:.45;cursor:not-allowed}
+.small{opacity:.88;font-size:.86rem}
+.close{position:absolute;right:10px;top:8px;cursor:pointer;padding:.35rem .6rem;border-radius:10px;background:#23172b;border:1px solid rgba(255,255,255,.08)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.45rem}
+@media (min-width:720px){ .grid{grid-template-columns:repeat(3,1fr)} }
+@media (min-width:980px){ .grid{grid-template-columns:repeat(4,1fr)} }
+
+/* Orders */
+.cols{display:flex;gap:.6rem;flex-wrap:wrap}
+.col{flex:1 1 280px}
+.order{display:flex;justify-content:space-between;align-items:center;padding:.55rem;border:1px solid var(--line);border-radius:10px;background:#21152a;margin:.25rem 0}
+.order.sel{outline:2px solid var(--brand)}
+.chip{padding:.18rem .5rem;border-radius:999px;background:var(--chip);font-size:.8rem}
+.tag{font-size:.85rem;opacity:.85}
+
+/* Drift */
+body.drift1 #c{filter:contrast(1.02) saturate(1.05) hue-rotate(4deg)}
+body.drift2 #c{filter:contrast(1.07) saturate(1.12) hue-rotate(9deg) blur(.3px)}
+body.drift3 #c{filter:contrast(1.14) saturate(1.2) hue-rotate(16deg) blur(.6px)}
+body.drift3 .topbar{background:linear-gradient(#180d20,#140b18)}
+
+/* Mobile controls */
+.pad{position:fixed;bottom:5rem;left:1rem;width:9rem;height:9rem;border-radius:50%;background:radial-gradient(rgba(255,255,255,.09),rgba(255,255,255,.02));pointer-events:auto;touch-action:none;z-index:25}
+.act{position:fixed;right:1.2rem;bottom:6rem;width:4.5rem;height:4.5rem;border-radius:50%;display:grid;place-items:center;background:radial-gradient(rgba(255,255,255,.1),rgba(255,255,255,.03));font-weight:700;z-index:25;border:1px solid rgba(255,255,255,.06)}
+
+.rtable{width:100%;border-collapse:collapse;font-size:.9rem}
+.rtable td,.rtable th{border-bottom:1px solid var(--line);padding:.35rem .4rem;text-align:left}
