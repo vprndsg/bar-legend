@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>BAR LEGEND — RTS x VN</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div id="clock" class="pill">00:00 Day 1</div>
+    <div id="money" class="pill brand">Money 320</div>
+    <div id="karma" class="pill">Karma 2</div>
+    <div id="morale" class="pill">Morale 100%</div>
+    <div id="heat" class="pill">Heat 0</div>
+    <div id="auth" class="pill">Authority 1</div>
+    <div id="diag" class="pill">Diag OK</div>
+    <div class="sp"></div>
+    <div class="btn" id="btnOrders">Orders 0</div>
+    <div class="btn" id="btnSupply">Supply</div>
+    <div class="btn" id="btnStats" title="Stats S">Stats</div>
+    <div class="btn" id="btnUpg" title="Upgrades U">Upg</div>
+    <div class="btn" id="btnAbil" title="Abilities K">Abil</div>
+    <div class="btn" id="btnTel" title="Telemetry T">Tel</div>
+    <div class="btn" id="btnPause" title="Pause P">Pause</div>
+  </div>
+
+  <div id="wrap"><canvas id="c" width="1024" height="640" aria-label="Bar Legend"></canvas></div>
+  <div id="hint">Tap the head of the queue to talk. Or open Orders and craft. A confirms choice.</div>
+
+  <!-- Stats -->
+  <div id="panelStats" class="panel">
+    <div class="close" data-close="#panelStats">Close</div>
+    <h2>Stats and Flags</h2>
+    <div class="row">
+      <div class="card">
+        <h3>Resources</h3>
+        <div class="kv"><span>Money</span><b id="ps_money">0</b></div>
+        <div class="kv"><span>Karma</span><b id="ps_karma">0</b></div>
+        <div class="kv"><span>Heat</span><b id="ps_heat">0</b></div>
+        <div class="kv"><span>Authority</span><b id="ps_auth">0</b></div>
+        <div class="kv"><span>Illusion L</span><b id="ps_L">Hidden</b></div>
+        <div class="kv"><span>Sales</span><b id="ps_sales">0</b></div>
+      </div>
+      <div class="card">
+        <h3>Morale</h3>
+        <div class="kv"><span>Shift buffer</span><b id="ps_mshift">0</b></div>
+        <div class="kv"><span>Jules</span><b id="ps_mj">0</b></div>
+        <div class="kv"><span>Mina</span><b id="ps_mm">0</b></div>
+        <div class="kv"><span>Theo</span><b id="ps_mt">0</b></div>
+        <div class="small">Low morale adds input lag and small penalties.</div>
+      </div>
+      <div class="card">
+        <h3>Flags</h3>
+        <div class="kv"><span>Trust</span><b id="ps_trust">0</b></div>
+        <div class="kv"><span>Pride</span><b id="ps_pride">0</b></div>
+        <div class="kv"><span>Compromise</span><b id="ps_comp">0</b></div>
+        <div class="kv"><span>Debt</span><b id="ps_debt">0</b></div>
+        <div class="kv"><span>Memory</span><b id="ps_mem">0</b></div>
+      </div>
+      <div class="card">
+        <h3>Inventory</h3>
+        <div id="ps_inv" class="small"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upgrades -->
+  <div id="panelUpg" class="panel">
+    <div class="close" data-close="#panelUpg">Close</div>
+    <h2>Upgrades</h2>
+    <div class="row">
+      <div class="card"><h3>Prep Station</h3><div class="small">Cut heat from rush scenes. Cost 25.</div><div class="list"><button id="buyPrep">Buy Prep Station</button></div></div>
+      <div class="card"><h3>POS Speed</h3><div class="small">Reduce L from speed pushes. Cost 30.</div><div class="list"><button id="buyPOS">Buy POS Speed</button></div></div>
+      <div class="card"><h3>Training</h3><div class="small">Passive morale recovery. Cost 20.</div><div class="list"><button id="buyTrain">Buy Training</button></div></div>
+      <div class="card"><h3>Ambience</h3><div class="small">Small tip boost. Cost 15.</div><div class="list"><button id="buyAmb">Buy Ambience</button></div></div>
+    </div>
+  </div>
+
+  <!-- Abilities -->
+  <div id="panelAbil" class="panel">
+    <div class="close" data-close="#panelAbil">Close</div>
+    <h2>Abilities and Traits</h2>
+    <div class="row">
+      <div class="card"><h3>Early</h3><div class="list">
+        <button id="buyDeEsc">Buy Deescalate (K1)</button>
+        <button id="useDeEsc">Use Deescalate</button>
+        <button id="buyTimebox">Buy Timebox (K1)</button>
+      </div></div>
+      <div class="card"><h3>Mid</h3><div class="small">Locked this slice.</div><div class="list"><button disabled>Spot contradictions</button><button disabled>Rally speech</button></div></div>
+      <div class="card"><h3>Late</h3><div class="small">Reveal tools later.</div><div class="list"><button disabled>Glimpse</button><button disabled>Anchor</button><button disabled>Aletheia</button></div></div>
+    </div>
+    <div class="small">Canvas dock also exposes quick RTS skills. Same stock and timers.</div>
+  </div>
+
+  <!-- Telemetry -->
+  <div id="panelTel" class="panel">
+    <div class="close" data-close="#panelTel">Close</div>
+    <h2>Telemetry</h2>
+    <div class="row">
+      <div class="card">
+        <h3>Rates</h3>
+        <div class="kv"><span>L growth per minute of heat</span><b id="tv_Lpm">0</b></div>
+        <div class="kv"><span>Karma per hour</span><b id="tv_Kph">0</b></div>
+        <div class="kv"><span>Morale loss seeded</span><b id="tv_Mloss">0</b></div>
+        <div class="kv"><span>Money delta</span><b id="tv_Money">0</b></div>
+      </div>
+      <div class="card">
+        <h3>Decisions</h3>
+        <div id="tv_list" class="small" style="max-height:220px;overflow:auto"></div>
+        <button id="tv_export">Export JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders -->
+  <div id="panelOrders" class="panel">
+    <div class="close" data-close="#panelOrders">Close</div>
+    <h2>Orders and Craft</h2>
+    <div class="cols">
+      <div class="col">
+        <div class="card">
+          <h3>Queue <span class="chip" id="ordCount">0</span></h3>
+          <div id="ordList"></div>
+          <div class="small">Tap an order to craft. Rapport improves tips. Heat reduces tips.</div>
+        </div>
+        <div class="card">
+          <h3>Shortcuts</h3>
+          <div class="grid">
+            <button id="autoFill">Auto fill required</button>
+            <button id="clearSel">Clear selection</button>
+            <button id="makeBtn">Make and Serve</button>
+            <button id="compBtn">Comp</button>
+            <button id="cancelBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3 id="craftTitle">No order selected</h3>
+          <div class="small" id="craftInfo"></div>
+          <div class="list" id="ingGrid"></div>
+        </div>
+        <div class="card">
+          <h3>Inventory</h3>
+          <div id="invQuick" class="small"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div id="panelSupply" class="panel">
+    <div class="close" data-close="#panelSupply">Close</div>
+    <h2>Supplies and Restock</h2>
+    <div class="row" id="supGrid"></div>
+    <div class="small">Bulk buy is faster. Keep core stock healthy to avoid stress and L drift.</div>
+  </div>
+
+  <!-- Report -->
+  <div id="panelReport" class="panel">
+    <div class="close" data-close="#panelReport">Close</div>
+    <h2>Shift Report</h2>
+    <table class="rtable">
+      <tr><th>Metric</th><th>Value</th></tr>
+      <tr><td>Money end</td><td id="rp_money">0</td></tr>
+      <tr><td>Karma end</td><td id="rp_karma">0</td></tr>
+      <tr><td>Authority end</td><td id="rp_auth">0</td></tr>
+      <tr><td>Heat peak</td><td id="rp_hmax">0</td></tr>
+      <tr><td>Illusion end</td><td id="rp_L">Hidden</td></tr>
+      <tr><td>Morale total</td><td id="rp_mtot">0</td></tr>
+      <tr><td>Choices made</td><td id="rp_cnt">0</td></tr>
+    </table>
+    <div class="small" id="rp_note"></div>
+  </div>
+
+  <!-- Mobile controls -->
+  <div id="joy" class="pad" aria-label="joystick"></div>
+  <div id="act" class="act" aria-label="action">A</div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
